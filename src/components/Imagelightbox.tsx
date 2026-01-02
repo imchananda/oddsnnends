@@ -28,6 +28,14 @@ export default function ImageLightbox({
         }
     }, [isOpen, initialIndex]);
 
+    const goToPrevious = useCallback(() => {
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    }, [images.length]);
+
+    const goToNext = useCallback(() => {
+        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    }, [images.length]);
+
     // Handle keyboard navigation
     useEffect(() => {
         if (!isOpen) return;
@@ -53,15 +61,7 @@ export default function ImageLightbox({
             document.removeEventListener("keydown", handleKeyDown);
             document.body.style.overflow = "";
         };
-    }, [isOpen, currentIndex]);
-
-    const goToPrevious = useCallback(() => {
-        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    }, [images.length]);
-
-    const goToNext = useCallback(() => {
-        setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-    }, [images.length]);
+    }, [isOpen, onClose, goToPrevious, goToNext]);
 
     if (!isOpen) return null;
 
@@ -159,8 +159,8 @@ export default function ImageLightbox({
                             key={index}
                             onClick={() => setCurrentIndex(index)}
                             className={`relative w-12 h-12 md:w-16 md:h-16 rounded-lg overflow-hidden transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white ${index === currentIndex
-                                    ? "ring-2 ring-white scale-110"
-                                    : "opacity-60 hover:opacity-100"
+                                ? "ring-2 ring-white scale-110"
+                                : "opacity-60 hover:opacity-100"
                                 }`}
                             aria-label={`View image ${index + 1}`}
                             aria-current={index === currentIndex ? "true" : "false"}

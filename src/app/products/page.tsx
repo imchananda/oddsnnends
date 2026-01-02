@@ -9,7 +9,7 @@ import { products, type ProductCategory } from "@/data/products";
 function ProductsContent() {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category") as ProductCategory | null;
-  
+
   const [selectedCategory, setSelectedCategory] = useState<ProductCategory | "all">(
     categoryParam || "all"
   );
@@ -26,7 +26,7 @@ function ProductsContent() {
     if (selectedCategory === "all") {
       return products;
     }
-    return products.filter((product) => product.category === selectedCategory);
+    return products.filter((product) => product.tags.includes(selectedCategory));
   }, [selectedCategory]);
 
   const handleCategoryChange = (category: ProductCategory | "all") => {
