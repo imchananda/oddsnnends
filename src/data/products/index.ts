@@ -52,7 +52,7 @@ export const getFeaturedProducts = (): Product[] => {
 };
 
 export const getProductsByCategory = (category: ProductCategory): Product[] => {
-    return products.filter((product) => product.category === category);
+    return products.filter((product) => product.tags.includes(category));
 };
 
 export const getProductById = (id: string): Product | undefined => {
